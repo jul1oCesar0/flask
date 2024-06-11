@@ -9,7 +9,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 # Cargar el modelo entrenado
-model = joblib.load('mod.pkl')
+model = joblib.load('model.pkl')
 app.logger.debug('Modelo cargado correctamente.')
 
 @app.route('/')
@@ -20,14 +20,11 @@ def home():
 def predict():
     try:
         # Obtener los datos enviados en el request
-        Area = float(request.form['Area'])
-        MinorAxisLength = float(request.form['MinorAxisLength'])
-        Roundness = float(request.form['Roundness'])
-        AspectRation = float(request.form['AspectRation'])
-        
+        abdomen = float(request.form['abdomen'])
+        antena = float(request.form['antena'])
         
         # Crear un DataFrame con los datos
-        data_df = pd.DataFrame([[Area, MinorAxisLength,Roundness,AspectRation]], columns=['Area', 'MinorAxisLength','Roundness','AspectRation'])
+        data_df = pd.DataFrame([[abdomen, antena]], columns=['abdomen', 'antena'])
         app.logger.debug(f'DataFrame creado: {data_df}')
         
         # Realizar predicciones
